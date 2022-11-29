@@ -28,14 +28,15 @@ profiles will result in a different result. Chaining scripts is also possible by
 ```json
 {
   "scripts": {
-    "cypress-open": "cypress open --config-file=cypress.json",
+    "cypress-open": "npx cypress open --config-file cypress.config.js",
     "cypress-run-sanity": "npm run clean-data && npm run sanity && npm run report",
-    "sanity": "npx cypress-tags run --config-file=cypress.json  --env TAGS='@sanity'",
-    "report": "node cypress/support/generate_report.js",
-    "clean-data": "npm run clean-report && npm run clean-videos && npm run clean-screenshots",
+    "sanity": "npx cypress run --env tags=@sanity --config-file cypress.config.js",
+    "report": "node cypress/support/helper/generate_report.js",
+    "clean-data": "npm run clean-report && npm run clean-videos && npm run clean-screenshots && npm run clean-cucumber",
     "clean-report": "rm -rf ./cypress/reports",
     "clean-videos": "rm -rf ./cypress/videos",
-    "clean-screenshots": "rm -rf ./cypress/screenshots"
+    "clean-screenshots": "rm -rf ./cypress/screenshots",
+    "clean-cucumber": "rm -rf ./cypress/cucumber-json"
   }
 }
 ```
@@ -51,7 +52,7 @@ The way we  use them in this project is to:
 ```json
 {
   "scripts": {
-      "sanity": "npx cypress-tags run --config-file=cypress.json --env TAGS=@sanity"
+      "sanity": "npx cypress run --env tags=@sanity --config-file cypress.config.js"
     }
 }
 ```
