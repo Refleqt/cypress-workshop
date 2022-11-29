@@ -8,10 +8,10 @@
   },
   "main": "index.js",
   "scripts": {
-    "cypress-open": "npx cypress open --config-file=cypress.json",
+    "cypress-open": "npx cypress open --config-file cypress.config.js",
     "cypress-run-sanity": "npm run clean-data && npm run sanity && npm run report",
-    "sanity": "npx cypress-tags run -e TAGS='@sanity' --config-file=cypress.json",
-    "report": "node cypress/support/generate_report.js",
+    "sanity": "npx cypress run --env tags=@sanity --config-file cypress.config.js",
+    "report": "node cypress/support/helper/generate_report.js",
     "clean-data": "npm run clean-report && npm run clean-videos && npm run clean-screenshots && npm run clean-cucumber",
     "clean-report": "rm -rf ./cypress/reports",
     "clean-videos": "rm -rf ./cypress/videos",
@@ -21,6 +21,7 @@
   "author": "Refleqt NV",
   "license": "Private",
   "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^14.0.0",
     "fs-extra": "^9.1.0",
     "jquery": "^3.5.1",
     "multiple-cucumber-html-reporter": "^1.18.0"
@@ -32,7 +33,6 @@
   ],
   "devDependencies": {
     "cypress": "^11.2.0",
-    "cypress-cucumber-preprocessor": "^4.0.1",
     "cypress-downloadfile": "^1.2.0"
   },
   "cypress-cucumber-preprocessor": {

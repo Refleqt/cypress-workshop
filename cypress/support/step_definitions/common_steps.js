@@ -1,4 +1,4 @@
-import {Given, When} from 'cypress-cucumber-preprocessor/steps';
+import {Given, When, Then} from '@badeball/cypress-cucumber-preprocessor';
 import home_page from '../pages/home_page';
 
 beforeEach(() => {
@@ -22,7 +22,7 @@ Given('I navigate to {string}', (url) => {
 });
 
 Given('I navigate to the homepage of coolblue', () => {
-  cy.visit(Cypress.config('url'))
+  cy.visit(Cypress.config('baseUrl'))
 });
 
 /*
