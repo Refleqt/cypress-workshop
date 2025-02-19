@@ -2,15 +2,12 @@
 
 /// JSON fixture file can be loaded directly using
 // the built-in JavaScript bundler
-// @ts-ignore
 const requiredExample = require('../../fixtures/example')
 
 context('Files', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/files')
-  })
 
-  beforeEach(() => {
     // load example.json fixture file and store
     // in the test context object
     cy.fixture('example.json').as('example')
@@ -22,41 +19,18 @@ context('Files', () => {
     // Instead of writing a response inline you can
     // use a fixture file's content.
 
-    cy.server()
-    cy.fixture('example.json').as('comment')
-    // when application makes an Ajax request matching "GET comments/*"
-    // Cypress will intercept it and reply with object
-    // from the "comment" alias
-    cy.route('GET', 'comments/*', '@comment').as('getComment')
+    // when application makes an Ajax request matching "GET **/comments/*"
+    // Cypress will intercept it and reply with the object in `example.json` fixture
+    cy.intercept('GET', '**/comments/*', { fixture: 'example.json' }).as(
+      'getComment'
+    )
 
     // we have code that gets a comment when
     // the button is clicked in scripts.js
     cy.get('.fixture-btn').click()
 
-    cy.wait('@getComment').its('responseBody')
-      .should('have.property', 'name')
-      .and('include', 'Using fixtures to represent data')
-
-    // you can also just write the fixture in the route
-    cy.route('GET', 'comments/*', 'fixture:example.json').as('getComment')
-
-    // we have code that gets a comment when
-    // the button is clicked in scripts.js
-    cy.get('.fixture-btn').click()
-
-    cy.wait('@getComment').its('responseBody')
-      .should('have.property', 'name')
-      .and('include', 'Using fixtures to represent data')
-
-    // or write fx to represent fixture
-    // by default it assumes it's .json
-    cy.route('GET', 'comments/*', 'fx:example').as('getComment')
-
-    // we have code that gets a comment when
-    // the button is clicked in scripts.js
-    cy.get('.fixture-btn').click()
-
-    cy.wait('@getComment').its('responseBody')
+    cy.wait('@getComment')
+      .its('response.body')
       .should('have.property', 'name')
       .and('include', 'Using fixtures to represent data')
   })
@@ -65,13 +39,12 @@ context('Files', () => {
     // we are inside the "function () { ... }"
     // callback and can use test context object "this"
     // "this.example" was loaded in "beforeEach" function callback
-    expect(this.example, 'fixture in the test context')
-      .to.deep.equal(requiredExample)
+    expect(this.example, 'fixture in the test context').to.deep.equal(
+      requiredExample
+    )
 
     // or use "cy.wrap" and "should('deep.equal', ...)" assertion
-    // @ts-ignore
-    cy.wrap(this.example, 'fixture vs require')
-      .should('deep.equal', requiredExample)
+    cy.wrap(this.example).should('deep.equal', requiredExample)
   })
 
   it('cy.readFile() - read file contents', () => {
@@ -79,8 +52,8 @@ context('Files', () => {
 
     // You can read a file and yield its contents
     // The filePath is relative to your project's root.
-    cy.readFile('cypress.json').then((json) => {
-      expect(json).to.be.an('object')
+    cy.readFile(Cypress.config('configFile')).then((config) => {
+      expect(config).to.be.an('string')
     })
   })
 
@@ -91,10 +64,10 @@ context('Files', () => {
 
     // Use a response from a request to automatically
     // generate a fixture file for use later
-    cy.request('https://jsonplaceholder.cypress.io/users')
-      .then((response) => {
-        cy.writeFile('cypress/fixtures/users.json', response.body)
-      })
+    cy.request('https://jsonplaceholder.cypress.io/users').then((response) => {
+      cy.writeFile('cypress/fixtures/users.json', response.body)
+    })
+
     cy.fixture('users').should((users) => {
       expect(users[0].name).to.exist
     })
@@ -104,7 +77,7 @@ context('Files', () => {
     cy.writeFile('cypress/fixtures/profile.json', {
       id: 8739,
       name: 'Jane',
-      email: 'jane@example.com',
+      email: 'jane@example.com'
     })
 
     cy.fixture('profile').should((profile) => {

@@ -4,7 +4,7 @@
 - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 3. search for packages
 - brew search 
-4. install package node (my version @18 is optional)
+4. install package node (my version @21 is optional)
 - brew install node@18
 5. download project
 - porject url

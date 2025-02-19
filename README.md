@@ -22,15 +22,16 @@ profiles will result in a different result. Chaining scripts is also possible by
 ```json
 {
   "scripts": {
-    "cypress-open": "npx cypress open --config-file cypress.json",
-    "cypress-run-project": "npm run clean-data && npm run run-project",
-    "cypress-run-examples": "npm run clean-data && npm run run-examples",
-    "run-project": "npx cypress run --config-file cypress.json --spec \"cypress/integration/project/*.js\"",
-    "run-examples": "npx cypress run --config-file cypress.json --spec \"cypress/integration/examples/*.js\"",
-    "clean-data": "npm run clean-report && npm run clean-videos && npm run clean-screenshots",
-    "clean-report": "rm -rf ./cypress/reports",
-    "clean-videos": "rm -rf ./cypress/videos",
-    "clean-screenshots": "rm -rf ./cypress/screenshots"
+    "cypress:open:specs": "npx cypress open --config-file cypress.config.spec.js",
+    "cypress:run:specs": "npm run clean:data && npm run run:specs",
+    "run:specs": "npx cypress run --config-file cypress.config.spec.js --spec 'cypress/e2e/1-advanced-examples/*.js'",
+    "cypress:open:cucumber": "npx cypress open --config-file cypress.config.cucumber.js",
+    "cypress:run:cucmber": "npm run clean:data && npm run run:cucumber",
+    "run:cucumber": "npx cypress run --config-file cypress.config.cucumber.js --spec 'cypress/e2e/2-cucumber-examples/*.feature'",
+    "clean:data": "npm run clean:report && npm run clean:videos && npm run clean:screenshots",
+    "clean:report": "rm -rf ./reports/*",
+    "clean:videos": "rm -rf ./cypress/videos",
+    "clean:screenshots": "rm -rf ./cypress/screenshots"
   }
 }
 ```
