@@ -1,45 +1,70 @@
-# itallent-test-automation
-Test automation project for the I-Tallent session using Cypress.
+# Cypress-Workshop
+functional test automation framework for testing.
 
-# Overview
-- Basic info
-- How to Configure
-- How to run
+## __Warning__
+Cypress 1.5.10 has introduced a breaking change in how environment variables are handled. The old Cypress.env() function has been deprecated and is replaced with cy.env() and cy.expose() with a stricter usage.
 
-# Basic info
-before starting on the project you'll need to run the 'npm install' command to install all needed dependencies. Once you have
-done that it is possible to use the predefined scripts in package.json. The 'local' script profile is used for local debugging 
-not for actually running the tests, since we would like to do that headless. 
+In this template the examples have been updated to use the new methods and the config files have been set to __not__ allow Cypress.env(). Many dependencies made use of this and have not yet migrated. In this suite the cucumber plugin is a notable example. This needs to be updated once their fix is available.
 
-# How to Configure project
-In the project we are using specs, and pre-configured scripts (examples, project). These scripts use a folder, and it 
-runs all tests within that folder.
+## Overview
 
-# How to run
-in the package.json you will be able to find the run scripts under the script tag. Once there you'll notice that different 
-profiles will result in a different result. Chaining scripts is also possible by using 'npm otherScriptName'.
+- Tests
+- Installation
+- Running
+- Framework
+    - eslint
+    - cucumber
 
+## Tests
+
+| feature        | tests                  |
+|:---------------|:-----------------------|
+| App Unlock     | login & logout of user |
+| ....           | other functionalities  |
+
+## Installation
+
+```bash
+npm install
+```
+
+```bash
+npm install cypress
+```
+
+```bash
+npm install eslint-plugin-cypress --save-dev
+```
+
+## Running
+Some predefined scripts can be found in the package.json. By executing the compile scripts triggers ESLint to perform code 
+checks across your entire repository. Running the Cypress scripts will execute the tests.
 ```json
 {
   "scripts": {
+    "compile": "npx eslint 'cypress/**/*.js'",
+    "compile:fix": "npx eslint 'cypress/**/*.js' --fix",
     "cypress:open:specs": "npx cypress open --config-file cypress.config.spec.js",
     "cypress:run:specs": "npm run clean:data && npm run run:specs",
     "run:specs": "npx cypress run --config-file cypress.config.spec.js --spec 'cypress/e2e/1-advanced-examples/*.js'",
     "cypress:open:cucumber": "npx cypress open --config-file cypress.config.cucumber.js",
     "cypress:run:cucmber": "npm run clean:data && npm run run:cucumber",
     "run:cucumber": "npx cypress run --config-file cypress.config.cucumber.js --spec 'cypress/e2e/2-cucumber-examples/*.feature'",
-    "clean:data": "npm run clean:report && npm run clean:videos && npm run clean:screenshots",
+    "clean:data": "npm run clean:report && npm run clean:performance:reports && npm run clean:a11y:reports && npm run clean:videos && npm run clean:screenshots",
     "clean:report": "rm -rf ./reports/*",
     "clean:videos": "rm -rf ./cypress/videos",
     "clean:screenshots": "rm -rf ./cypress/screenshots"
-  }
+  } 
 }
 ```
 
-## Environment Param config
-The most important is the usage of environment parameters which allows you to set certain environmental values. These environment
-parameters can be chained by comma separation. 
+## Framework
 
-The way we  use them in this project is to:
-1. choose which tests to run (project, examples)
-2. choose which config to run (dev, acc, prod)
+### eslint
+ESLint is a popular open-source JavaScript linting tool that helps developers find and fix problems in their JavaScript code. 
+Linting refers to the process of analyzing code to detect potential errors, coding style violations, or other issues that could 
+lead to bugs or maintainability problems.
+
+### cucumber
+Cucumber.js is a testing tool for JavaScript that supports Behavior-Driven Development (BDD). It allows you to write tests in
+plain language, using Gherkin syntax, and then execute those tests against your code to ensure it meets specified behaviors.
