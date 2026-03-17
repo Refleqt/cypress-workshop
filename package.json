@@ -1,7 +1,7 @@
 {
   "name": "cypress-workshop",
   "version": "1.0.1",
-  "description": "Cypress reference application for demo purposes.",
+  "description": "Cypress workshop application for demo purposes.",
   "main": "index.js",
   "scripts": {
     "compile": "npx prettier --write . && eslint",
