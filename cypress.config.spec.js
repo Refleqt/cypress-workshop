@@ -28,6 +28,7 @@ module.exports = defineConfig({
       return config;
     },
     baseUrl: 'https://www.saucedemo.com/',
-    specPattern: 'cypress/e2e/*/*.js'
+    specPattern: 'cypress/e2e/*/*.js',
+    allowCypressEnv: false
   }
 });

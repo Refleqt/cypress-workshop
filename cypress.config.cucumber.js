@@ -1,9 +1,9 @@
-const {defineConfig} = require('cypress');
+const { defineConfig } = require('cypress');
 // Cucumber
 const cypressOnFix = require('cypress-on-fix');
 const createBundler = require('@bahmutov/cypress-esbuild-preprocessor');
-const {addCucumberPreprocessorPlugin} = require('@badeball/cypress-cucumber-preprocessor');
-const {createEsbuildPlugin} = require('@badeball/cypress-cucumber-preprocessor/esbuild');
+const { addCucumberPreprocessorPlugin } = require('@badeball/cypress-cucumber-preprocessor');
+const { createEsbuildPlugin } = require('@badeball/cypress-cucumber-preprocessor/esbuild');
 
 module.exports = defineConfig({
   username: 'standard_user',
@@ -35,10 +35,11 @@ module.exports = defineConfig({
       on = cypressOnFix(on);
       require('cypress-mochawesome-reporter/plugin')(on);
       await addCucumberPreprocessorPlugin(on, config);
-      on('file:preprocessor', createBundler({plugins: [createEsbuildPlugin(config)]}));
+      on('file:preprocessor', createBundler({ plugins: [createEsbuildPlugin(config)] }));
       return config;
     },
     baseUrl: 'https://www.saucedemo.com/',
-    specPattern: 'cypress/e2e/*/*.feature'
+    specPattern: 'cypress/e2e/*/*.feature',
+    allowCypressEnv: true
   }
 });
