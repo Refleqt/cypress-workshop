@@ -50,7 +50,7 @@ checks across your entire repository. Running the Cypress scripts will execute t
     "cypress:open:cucumber": "npx cypress open --config-file cypress.config.cucumber.js",
     "cypress:run:cucmber": "npm run clean:data && npm run run:cucumber",
     "run:cucumber": "npx cypress run --config-file cypress.config.cucumber.js --spec 'cypress/e2e/2-cucumber-examples/*.feature'",
-    "clean:data": "npm run clean:report && npm run clean:performance:reports && npm run clean:a11y:reports && npm run clean:videos && npm run clean:screenshots",
+    "clean:data": "npm run clean:report && npm run clean:videos && npm run clean:screenshots",
     "clean:report": "rm -rf ./reports/*",
     "clean:videos": "rm -rf ./cypress/videos",
     "clean:screenshots": "rm -rf ./cypress/screenshots"
